@@ -1,0 +1,38 @@
+.about-section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #000000; /* kenyaBlack */
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.about-content {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.about-text {
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.about-subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.about-list {
+  list-style: decimal;
+  list-style-position: inside;
+  color: #000000;
+}
+
+.about-list li {
+  margin-bottom: 0.5rem;
+}

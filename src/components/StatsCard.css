@@ -1,0 +1,19 @@
+.stats-card {
+  background-color: #FFFFFF; /* kenyaWhite */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stats-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000; /* kenyaBlack */
+  margin-bottom: 0.5rem;
+}
+
+.stats-title {
+  color: #006600; /* kenyaGreen */
+  font-size: 1rem;
+}

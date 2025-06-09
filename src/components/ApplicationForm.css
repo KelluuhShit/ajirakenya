@@ -1,0 +1,55 @@
+.application-form {
+  background-color: #FFFFFF; /* kenyaWhite */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000; /* kenyaBlack */
+  margin-bottom: 1rem;
+}
+
+.form-note {
+  color: #CC0000; /* kenyaRed */
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  color: #000000;
+  margin-bottom: 0.25rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #000000;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-error {
+  color: #CC0000;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.form-button {
+  background-color: #CC0000;
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

@@ -1,0 +1,19 @@
+.footer {
+  background-color: #000000; /* kenyaBlack */
+  color: #FFFFFF; /* kenyaWhite */
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.footer-text {
+  margin-bottom: 0.5rem;
+}
+
+.footer-link {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #CC0000; /* kenyaRed */
+}
