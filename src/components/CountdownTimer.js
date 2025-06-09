@@ -11,8 +11,8 @@ const CountdownTimer = () => {
     return (
       <div className="countdown">
         <div className="countdown-item">
-          <span className="countdown-value">{days}</span>
-          <p>Days</p>
+          {/* <span className="countdown-value">{days}</span>
+          <p>Days</p> */}
         </div>
         <div className="countdown-item">
           <span className="countdown-value">{hours}</span>

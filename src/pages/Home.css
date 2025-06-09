@@ -1,13 +1,14 @@
+/* Existing styles */
 .home-section {
-  padding: 3rem 0;
+  padding-bottom: 3rem;
 }
 
 .section-title {
   font-size: 1.875rem;
   font-weight: bold;
-  color: #000000; /* kenyaBlack */
+  color: #333; /* Adjusted to a darker shade for better contrast */
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 4rem;
 }
 
 .stats-grid {
@@ -16,8 +17,143 @@
   gap: 1rem;
 }
 
+.apply-section {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #FFFFFF;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #CC0000; /* kenyaRed */
+}
+
+.btn-primary:hover {
+  background-color: #A30000;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dimmed background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #FFFFFF; /* kenyaWhite */
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: border-box 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000000; /* kenyaBlack */
+  cursor: pointer;
+  z-index: 4;
+}
+
+.modal-image {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3; /* 70% transparency */
+  position: relative;
+  z-index: 1;
+}
+
+.modal-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Overlay for readability */
+  z-index: 2;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  background-color: #006600; /* kenyaGreen */
+  color: #FFFFFF; /* kenyaWhite */
+}
+
+.hero-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.text-subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
 @media (min-width: 768px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .modal-image {
+    height: 250px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .text-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .apply-section {
+    padding: 1.5rem 0;
+  }
+
+
+  .modal-content {
+    width: 95%;
+  }
+
+  .modal-image {
+    height: 150px;
+  }
+
+  .hero-title {
+    font-size: 1.25rem;
+  }
+
+  .text-subtitle {
+    font-size: 0.875rem;
   }
 }

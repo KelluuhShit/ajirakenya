@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import coverImg from '../assets/cover.jpg';
 import './Hero.css';
 
 const Hero = () => {
   return (
-    <section className="hero" style={{ backgroundImage: `url(/assets/images/hero-bg.jpg)` }}>
+    <section className="hero">
+      <div className="hero-bg" style={{ backgroundImage: `url(${coverImg})` }}></div>
       <div className="container hero-container">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}

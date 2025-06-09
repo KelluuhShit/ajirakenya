@@ -1,22 +1,61 @@
-.application-form {
-  background-color: #FFFFFF; /* kenyaWhite */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+.application-form-wrapper {
   max-width: 32rem;
   margin: 0 auto;
+  padding: 1.5rem;
 }
 
-.form-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000000; /* kenyaBlack */
-  margin-bottom: 1rem;
+.application-form {
+  border-radius: 0.5rem;
 }
 
 .form-note {
   color: #CC0000; /* kenyaRed */
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 1.5rem;
+  gap: 2em
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #CCCCCC;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.step.active .step-number {
+  background-color: #006600; /* kenyaGreen */
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: #000000;
+}
+
+.step-connector {
+  width: 50px;
+  height: 2px;
+  background-color: #CCCCCC;
 }
 
 .form-group {
@@ -27,14 +66,28 @@
   display: block;
   color: #000000;
   margin-bottom: 0.25rem;
+  text-align: start;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .form-input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #000000;
-  border-radius: 0.5rem;
+  padding: 0.8rem;
+  border: 2px solid #000000;
+  border-radius: 0.2rem;
   font-size: 1rem;
+}
+
+.checkmark {
+  position: absolute;
+  right: 10px;
+  color: #006600; /* kenyaGreen */
+  font-size: 1.25rem;
 }
 
 .form-error {
@@ -43,13 +96,61 @@
   margin-top: 0.25rem;
 }
 
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
 .form-button {
-  background-color: #CC0000;
+  background-color: #CC0000; /* kenyaRed */
   color: #FFFFFF;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
+  width: 100%;
   border: none;
-  cursor: not-allowed;
+  cursor: pointer;
+}
+
+.form-button:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-button.secondary {
+  background-color: #000000; /* kenyaBlack */
+}
+
+.form-button.secondary:hover {
+  background-color: #333333;
+}
+
+@media (max-width: 767px) {
+  .application-form-wrapper {
+    padding: 1rem;
+    max-width: 95%;
+  }
+
+  .form-title {
+    font-size: 1.25rem;
+  }
+
+  .form-input {
+    font-size: 0.875rem;
+  }
+
+ 
+
+  .step {
+    flex-direction: row;
+    gap: 0.5rem;
+    width: auto;
+  }
+
+  .step-connector {
+    width: 2px;
+    height: 20px;
+  }
 }
