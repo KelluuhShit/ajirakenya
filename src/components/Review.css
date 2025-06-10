@@ -1,0 +1,117 @@
+.review-wrapper {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.review-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000; /* kenyaBlack */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.review-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-card {
+  background-color: #FFFFFF; /* kenyaWhite */
+  border: 2px solid #000000; /* kenyaBlack */
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #006600; /* kenyaGreen */
+  margin-bottom: 1rem;
+}
+
+.review-card p {
+  margin: 0.5rem 0;
+  color: #000000;
+}
+
+.review-card strong {
+  color: #CC0000; /* kenyaRed */
+}
+
+.review-button {
+  background-color: #CC0000; /* kenyaRed */
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 1.5rem auto;
+  width: 100%;
+  max-width: 200px;
+}
+
+.review-button:hover {
+  background-color: #A30000;
+}
+
+.review-loading,
+.review-error {
+  text-align: center;
+  color: #CC0000;
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+
+/* Loader Styles */
+.loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.loader {
+  border: 4px solid #CCCCCC;
+  border-top: 4px solid #006600; /* kenyaGreen */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+.loader-text {
+  margin-top: 1rem;
+  color: #CC0000; /* kenyaRed */
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 767px) {
+  .review-wrapper {
+    padding: 1rem;
+    max-width: 95%;
+  }
+
+  .review-title {
+    font-size: 1.25rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .review-card p {
+    font-size: 0.875rem;
+  }
+
+
+}

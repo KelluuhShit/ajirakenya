@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../services/firebase';
 import './ApplicationForm.css';
 
 const ApplicationForm = () => {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false); // Add loading state
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -37,9 +42,23 @@ const ApplicationForm = () => {
     }),
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (values) => {
-      console.log('Form submitted:', values);
-      alert('Application submitted (mock). Official submissions open June 3, 2025.');
+    onSubmit: async (values) => {
+      try {
+        setLoading(true); // Show loader
+        const docRef = await addDoc(collection(db, 'applications'), {
+          ...values,
+          submittedAt: new Date().toISOString(),
+        });
+        localStorage.setItem('lastApplicationId', docRef.id); // Store ID
+        setTimeout(() => {
+          setLoading(false); // Hide loader
+          navigate('/reviews'); // Navigate after 3 seconds
+        }, 3000);
+      } catch (error) {
+        setLoading(false);
+        console.error('Error saving to Firestore:', error);
+        alert('Failed to submit application. Please try again.');
+      }
     },
   });
 
@@ -64,9 +83,17 @@ const ApplicationForm = () => {
   const isFieldValid = (fieldName) =>
     formik.touched[fieldName] && !formik.errors[fieldName];
 
+  if (loading) {
+    return (
+      <div className="loader-wrapper">
+        <div className="loader"></div>
+        <p className="loader-text">Processing your application...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="application-form-wrapper">
-
       <div className="stepper">
         <div className={`step ${step === 1 ? 'active' : ''}`}>
           <span className="step-number">1</span>
@@ -289,7 +316,7 @@ const ApplicationForm = () => {
               <button type="button" className="form-button secondary" onClick={prevStep}>
                 Back
               </button>
-              <button type="submit" className="form-button" disabled>
+              <button type="submit" className="form-button">
                 Review Information
               </button>
             </div>
