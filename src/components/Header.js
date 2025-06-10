@@ -19,7 +19,7 @@ const Header = () => {
           transition={{ duration: 0.5 }}
         >
           <Link to="/" className="logo">
-            Kazi Mtaani
+            Kenyan Youth Jobs
           </Link>
         </motion.div>
         <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle navigation menu">

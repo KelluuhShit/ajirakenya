@@ -4,12 +4,12 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container">
-        <p className="footer-text">Kazi Mtaani Climate Workx 2025</p>
+        <p className="footer-text">Kenyan Youth Jobs 2025</p>
         <p className="footer-text">
-          Implemented by KeRRA & KURA under the Government of Kenya
+         Opportunities for 110,000 Youth - Building Communities, Fighting Climate Change
         </p>
         <p>
-          <a href="mailto:info@kazimtaani.go.ke" className="footer-link">
+          <a href="mailto:info@jobsforyouths.com" className="footer-link">
             Contact Us
           </a>
         </p>

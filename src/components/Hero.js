@@ -14,7 +14,7 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
           className="hero-title"
         >
-          Kazi Mtaani Climate Workx 2025
+          Kenyan Youth Jobs 2025
         </motion.h1>
         <motion.p
           initial={{ opacity: 0 }}

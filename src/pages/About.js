@@ -12,21 +12,20 @@ const About = () => {
   return (
     <section className="about-section">
       <div className="container">
-        <h2 className="section-title">About Kazi Mtaani Climate Workx</h2>
+        <h2 className="section-title">About Kenyan Youth Jobs</h2>
         <div className="about-content">
           <p className="about-text">
-            The Government of Kenya has officially announced the return of the
-            transformative Kazi Mtaani initiative through a new and revitalized program
-            dubbed Climate Workx. This large-scale employment program seeks to provide
-            temporary work opportunities to over 110,000 youths across the country,
-            targeting young Kenyans between the ages of 18 to 35 years.
+              Kenyan youth are turning to handy skills in construction, 
+              carpentry, and masonry to find jobs and create opportunities. With a growing demand
+              for housing and infrastructure, these trades have become reliable
+              sources of income. Many young people are using vocational training 
+              and apprenticeships to develop their skills and bypass unemployment challenges.
           </p>
           <p className="about-text">
-            Implemented under the oversight of Kenya Rural Roads Authority (KeRRA) and
-            Kenya Urban Roads Authority (KURA) engineers, in coordination with officers
-            from the National Government Administration Officers (NGAO), this program
-            seeks to combat youth unemployment while also supporting the government's
-            climate resilience and infrastructure maintenance agenda.
+            The construction sector's growth has also created a lively job market for informal
+             and semi-formal work. Young Kenyans are specializing in trades like welding, plumbing, 
+             and electrical work, which are in constant demand. Some are even starting small 
+             businesses, employing their peers and boosting local economies.
           </p>
           <h3 className="about-subtitle">Program Objectives</h3>
           <ul className="about-list">

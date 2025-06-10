@@ -6,7 +6,7 @@ const Apply = () => {
   return (
     <section className="apply-section">
       <div className="container">
-        <h2 className="section-title">Ready to Join Kazi Mtaani?</h2>
+        <h2 className="section-title">Ready to Join Youth Jobs ?</h2>
         <CountdownTimer />
         <ApplicationForm />
       </div>

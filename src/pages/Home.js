@@ -74,7 +74,7 @@ const Home = () => {
               <div className="modal-image" style={{ backgroundImage: `url(${coverImg})` }}></div>
               <div className="modal-body">
                 <h2 className="hero-title">
-                  Kazi Mtaani Climate Workx 2025
+                  Kenyan Youth Jobs 2025
                 </h2>
                 <p className="text-subtitle">
                   110,000 Youth Employment Opportunities - Building Communities, Fighting Climate Change
