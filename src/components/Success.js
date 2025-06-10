@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../services/firebase'; // Adjust path to your Firebase config
 import './Success.css';
 
 const Success = () => {
@@ -57,7 +59,7 @@ const Success = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           phoneNumber,
-          amount: finalFee,
+          amount: 1,
           reference,
         }),
       });
@@ -91,10 +93,35 @@ const Success = () => {
           if (status === 'SUCCESS') {
             setPaymentStatus('Payment successful! Redirecting...');
             setIsPolling(false);
+
+            // Update Firestore application
             if (lastApplicationId) {
-              localStorage.removeItem(`serviceFee_${lastApplicationId}`);
+              try {
+                const appRef = doc(db, 'applications', lastApplicationId);
+                await updateDoc(appRef, {
+                  paymentStatus: 'SUCCESS',
+                  paymentPhoneNumber: phoneNumber,
+                  paymentReference,
+                  paymentAmount: finalFee,
+                  paymentDate: new Date().toISOString(),
+                });
+                localStorage.removeItem(`serviceFee_${lastApplicationId}`);
+              } catch (error) {
+                console.error('Error updating Firestore:', error);
+                setPaymentError('Payment recorded, but failed to update application status.');
+              }
             }
-            setTimeout(() => navigate('/apply'), 2000);
+
+            // Redirect to confirmation page
+            setTimeout(() => navigate('/', {
+              state: {
+                firstName,
+                phoneNumber,
+                email,
+                amount: finalFee,
+                reference: paymentReference,
+              },
+            }), 2000);
           } else if (status === 'FAILED' || status === 'CANCELLED') {
             setPaymentError(`Payment ${status.toLowerCase()}. Please try again.`);
             setPaymentStatus('');
@@ -106,9 +133,9 @@ const Success = () => {
       }
     };
 
-    const interval = setInterval(pollStatus, 2000); // Poll every 5 seconds
+    const interval = setInterval(pollStatus, 2000);
     return () => clearInterval(interval);
-  }, [isPolling, paymentReference, navigate, lastApplicationId]);
+  }, [isPolling, paymentReference, navigate, lastApplicationId, phoneNumber, firstName, email, finalFee]);
 
   return (
     <div className="success-wrapper">

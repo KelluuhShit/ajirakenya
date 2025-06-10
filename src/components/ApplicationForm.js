@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import './ApplicationForm.css';
 
 const ApplicationForm = () => {
   const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
+  const [submissionError, setSubmissionError] = useState(''); // Add error state
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -28,10 +29,10 @@ const ApplicationForm = () => {
       firstName: Yup.string().required('First name is required'),
       lastName: Yup.string().required('Last name is required'),
       nationalId: Yup.string()
-        .matches(/^\d{8}$/, 'National ID must be 8 digits')
-        .required('National ID is required'),
+    .matches(/^\d{8,}$/, 'National ID must be at least 8 digits')
+    .required('National ID is required'),
       phoneNumber: Yup.string()
-        .matches(/^07\d{8}$/, 'Phone number must start with 07 and be 10 digits')
+        .matches(/^0[17]\d{8}$/, 'Phone number must start with 07 or 01 and be 10 digits')
         .required('Phone number is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
       gender: Yup.string().required('Gender is required'),
@@ -42,22 +43,44 @@ const ApplicationForm = () => {
     }),
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmissionError('');
+      setLoading(true);
+
       try {
-        setLoading(true); // Show loader
+        // Check for existing paid application
+        const q = query(
+          collection(db, 'applications'),
+          where('nationalId', '==', values.nationalId),
+          where('phoneNumber', '==', values.phoneNumber),
+          where('paymentStatus', '==', 'SUCCESS')
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          setSubmissionError('You have already submitted your application succesfully, please wait.');
+          setLoading(false);
+          setSubmitting(false);
+          return;
+        }
+
+        // Save new application
         const docRef = await addDoc(collection(db, 'applications'), {
           ...values,
           submittedAt: new Date().toISOString(),
+          paymentStatus: 'PENDING',
         });
-        localStorage.setItem('lastApplicationId', docRef.id); // Store ID
+        localStorage.setItem('lastApplicationId', docRef.id);
+
         setTimeout(() => {
-          setLoading(false); // Hide loader
-          navigate('/reviews'); // Navigate after 3 seconds
+          setLoading(false);
+          navigate('/reviews');
         }, 3000);
       } catch (error) {
         setLoading(false);
+        setSubmitting(false);
         console.error('Error saving to Firestore:', error);
-        alert('Failed to submit application. Please try again.');
+        setSubmissionError('Failed to submit application. Please try again.');
       }
     },
   });
@@ -312,11 +335,12 @@ const ApplicationForm = () => {
                 <p className="form-error">{formik.errors.preferredWork}</p>
               )}
             </div>
+            {submissionError && <p className="form-error submission-error">{submissionError}</p>}
             <div className="form-buttons">
               <button type="button" className="form-button secondary" onClick={prevStep}>
                 Back
               </button>
-              <button type="submit" className="form-button">
+              <button type="submit" className="form-button" disabled={formik.isSubmitting}>
                 Review Information
               </button>
             </div>
