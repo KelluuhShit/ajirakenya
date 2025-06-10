@@ -122,7 +122,7 @@
   transition: all 0.3s ease;
 }
 
-.edit-button:hover {
+.edit-button:hover:not(:disabled) {
   background-color: #E6F2E6; /* Light green */
   transform: translateY(-2px);
 }
@@ -132,10 +132,26 @@
   outline-offset: 2px;
 }
 
+.edit-button:disabled {
+  color: #CCCCCC;
+  border-color: #CCCCCC;
+  cursor: not-allowed;
+}
+
 .error-text {
   color: #CC0000; /* kenyaRed */
   font-size: 0.75rem;
   margin-top: 0.25rem;
+}
+
+.payment-status {
+  color: #006600; /* kenyaGreen */
+  font-size: 0.875rem;
+  margin-top: 1rem;
+}
+
+.payment-error {
+  margin-top: 1rem;
 }
 
 .success-buttons {

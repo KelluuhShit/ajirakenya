@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import './Success.css';
 
 const Success = () => {
@@ -14,15 +15,18 @@ const Success = () => {
   const validFees = [100, 105, 110, 115, 120];
   const finalFee = validFees.includes(serviceFee) ? serviceFee : 100;
 
-  // Phone number state
+  // State for phone number and payment
   const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber);
   const [isEditing, setIsEditing] = useState(false);
   const [phoneError, setPhoneError] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('');
+  const [paymentError, setPaymentError] = useState('');
+  const [paymentReference, setPaymentReference] = useState(null);
+  const [isPolling, setIsPolling] = useState(false);
 
   // Handle edit/save button
   const handleEditToggle = () => {
     if (isEditing) {
-      // Validate phone number: Kenyan format (07xxxxxxxx)
       const phoneRegex = /^07\d{8}$/;
       if (!phoneRegex.test(phoneNumber)) {
         setPhoneError('Phone number must start with 07 and be 10 digits');
@@ -35,21 +39,76 @@ const Success = () => {
     }
   };
 
-  // Handle phone number input change
+  // Handle phone number change
   const handlePhoneChange = (e) => {
     setPhoneNumber(e.target.value);
-    if (phoneError) setPhoneError(''); // Clear error on change
+    if (phoneError) setPhoneError('');
   };
 
-  const handlePay = () => {
-    // For demo: Alert payment details (replace with actual payment logic)
-    alert(`Initiating payment of KES ${finalFee} via M-PESA to ${phoneNumber}`);
-    // Clear stored fee for new application
-    if (lastApplicationId) {
-      localStorage.removeItem(`serviceFee_${lastApplicationId}`);
+  // Initiate STK Push
+  const handlePay = async () => {
+    setPaymentStatus('Processing...');
+    setPaymentError('');
+    const reference = `APP_${lastApplicationId}_${uuidv4().slice(0, 8)}`;
+
+    try {
+      const response = await fetch('/api/stk-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phoneNumber,
+          amount: finalFee,
+          reference,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setPaymentReference(data.payheroReference);
+        setPaymentStatus('Payment initiated. Please complete the M-PESA prompt on your phone.');
+        setIsPolling(true);
+      } else {
+        setPaymentError(data.error || 'Failed to initiate payment.');
+        setPaymentStatus('');
+      }
+    } catch (error) {
+      setPaymentError('An error occurred. Please try again.');
+      setPaymentStatus('');
+      console.error('STK Push error:', error);
     }
-    navigate('/apply');
   };
+
+  // Poll transaction status
+  useEffect(() => {
+    if (!isPolling || !paymentReference) return;
+
+    const pollStatus = async () => {
+      try {
+        const response = await fetch(`/api/transaction-status?reference=${paymentReference}`);
+        const data = await response.json();
+        if (data.success) {
+          const status = data.status;
+          if (status === 'SUCCESS') {
+            setPaymentStatus('Payment successful! Redirecting...');
+            setIsPolling(false);
+            if (lastApplicationId) {
+              localStorage.removeItem(`serviceFee_${lastApplicationId}`);
+            }
+            setTimeout(() => navigate('/apply'), 2000);
+          } else if (status === 'FAILED' || status === 'CANCELLED') {
+            setPaymentError(`Payment ${status.toLowerCase()}. Please try again.`);
+            setPaymentStatus('');
+            setIsPolling(false);
+          }
+        }
+      } catch (error) {
+        console.error('Status polling error:', error);
+      }
+    };
+
+    const interval = setInterval(pollStatus, 2000); // Poll every 5 seconds
+    return () => clearInterval(interval);
+  }, [isPolling, paymentReference, navigate, lastApplicationId]);
 
   return (
     <div className="success-wrapper">
@@ -83,6 +142,7 @@ const Success = () => {
               className="edit-button"
               onClick={handleEditToggle}
               aria-label={isEditing ? 'Save phone number' : 'Edit phone number'}
+              disabled={paymentStatus === 'Processing...'}
             >
               {isEditing ? 'Save' : 'Edit'}
             </button>
@@ -98,11 +158,17 @@ const Success = () => {
             className="success-button primary"
             onClick={handlePay}
             aria-label={`Pay KES ${finalFee} to complete your application`}
-            disabled={isEditing || !!phoneError}
+            disabled={isEditing || !!phoneError || paymentStatus === 'Processing...'}
           >
-            Pay KES {finalFee} Now
+            {paymentStatus === 'Processing...' ? 'Processing...' : `Pay KES ${finalFee} Now`}
           </button>
         </div>
+        {paymentStatus && !paymentError && (
+          <p className="payment-status">{paymentStatus}</p>
+        )}
+        {paymentError && (
+          <p className="error-text payment-error">{paymentError}</p>
+        )}
       </div>
     </div>
   );
