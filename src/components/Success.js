@@ -59,7 +59,7 @@ const Success = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           phoneNumber,
-          amount: 1,
+          amount: finalFee,
           reference,
         }),
       });

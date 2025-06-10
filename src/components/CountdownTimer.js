@@ -2,7 +2,7 @@ import Countdown from 'react-countdown';
 import './CountdownTimer.css';
 
 const CountdownTimer = () => {
-  const launchDate = new Date('2025-12-31T00:00:00'); // Adjusted for testing
+  const launchDate = new Date('2025-07-07T06:00:00'); // Set to July 7, 2025, 06:00 AM EAT
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -11,8 +11,8 @@ const CountdownTimer = () => {
     return (
       <div className="countdown">
         <div className="countdown-item">
-          {/* <span className="countdown-value">{days}</span>
-          <p>Days</p> */}
+          <span className="countdown-value">{days}</span>
+          <p>Days</p>
         </div>
         <div className="countdown-item">
           <span className="countdown-value">{hours}</span>
