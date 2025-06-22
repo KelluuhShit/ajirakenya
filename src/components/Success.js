@@ -14,8 +14,8 @@ const Success = () => {
   const lastApplicationId = localStorage.getItem('lastApplicationId');
   const storedFee = localStorage.getItem(`serviceFee_${lastApplicationId}`);
   const serviceFee = storedFee ? parseInt(storedFee, 10) : stateFee || 100;
-  const validFees = [100, 105, 110, 115, 120];
-  const finalFee = validFees.includes(serviceFee) ? serviceFee : 100;
+  const validFees = [150, 160, 180, 200, 220];
+  const finalFee = validFees.includes(serviceFee) ? serviceFee : 130;
 
   // State for phone number and payment
   const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber);
