@@ -7,7 +7,7 @@ const Apply = () => {
     <section className="apply-section">
       <div className="container">
         <h2 className="section-title">Ready to Join Youth Jobs ?</h2>
-        <CountdownTimer />
+        {/* <CountdownTimer /> */}
         <ApplicationForm />
       </div>
     </section>
